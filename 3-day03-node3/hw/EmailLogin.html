@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>邮箱登录</title>
+	<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+</head>
+<body>
+	用户名：<input type="text" id='user'><br>
+	密码：	<input type="password" id='pwd'><br>
+	邮箱<input type="password" id='mail'><button id='getNum'>获取验证码</button><br>
+	输入验证码：	<input type="text" id='txt'><br>
+	<button onclick="login()">登录</button>	
+	<script type="text/javascript">
+		function login(){
+			ajax();
+			 if(!$('input').val()) return;
+			if($('#user').val()===""||$('#pwd').val()===""||$('#mail').val()===""||$('#txt').val()==="") return;
+			 var username=$('#user').val();
+			 var pwd=$('#pwd').val();
+			 $.get(`http://localhost:1001/login?username=${username}&password=${pwd}`,(res)=>{
+			 	if(res.err===0){
+			 		alert(res.msg);
+			 	}else{
+			 		if(res.err===1){
+			 			alert(res.msg);
+			 		}else{
+			 			alert(res.msg);
+			 		}
+			 	}
+			 })
+		}
+		function ajax(){
+			var txt=$("#txt").val();
+			if(txt==='') return;
+			$.get('http://localhost:1001/rec?num='+txt,(res)=>{
+				//console.log(res.msg);
+				if(res.err===0){
+					alert(res.msg);
+				}else{
+					alert(res.msg);
+				}
+			})
+	
+		}
+		document.getElementById('mail').onblur=function(){
+			var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+			if(reg.test(document.getElementById('mail').value)){
+				alert('邮箱正确');
+			}else{
+				alert('邮箱错误');
+			}
+		}
+		$('#getNum').click(function(){
+			if(document.getElementById('mail').value=="") return;
+			var mail=$("#mail").val();
+			var xhr=new XMLHttpRequest();
+			xhr.open('GET','http://localhost:1001/send?'+mail);
+			xhr.send();
+			xhr.onreadystatechange=function(){
+				if(xhr.readstate===4&&xhr.status===200){
+					console.log(xhr.responseTxt);
+				}
+			}
+		})
+	</script>
+</body>
+</html>

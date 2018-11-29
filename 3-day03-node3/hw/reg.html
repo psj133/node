@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>注册</title>
+	<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+</head>
+<body>
+	用户:<input type="text" id='us'>
+	密码:<input type="password" id='ps'>
+	<button onclick="register()">注册</button>
+	<script type="text/javascript">
+		function register(){
+			if($('input').val()=='') return;
+			var us=$('#us').val();
+			var ps=$("#ps").val();
+			$.get(`http://localhost:1001/reg?username=${us}&password=${ps}`,(res)=>{
+				if(res.err===0){
+					alert(res.msg);
+				}else{
+					alert(res.msg);
+				}
+			})
+		}
+	</script>
+</body>
+</html>

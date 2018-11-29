@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+</head>
+<body>
+	<input type="text" id='user'>
+	<input type="password" id='ps'>
+	<button onclick="ajax()">注册</button>
+	<script type="text/javascript">
+		function ajax(){
+			var us=$('#user').val();
+			var ps=$('#ps').val();
+			$.get(`http://localhost:1000/home?user=${us}&ps=${ps}`,(res)=>{
+				if(res.err===0){
+					alert(res.msg)
+				}
+			})
+		}
+	</script>
+</body>
+</html>
