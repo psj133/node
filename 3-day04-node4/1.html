@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+</head>
+<body>
+    用户名:<input type="text" id="us"><br>
+    密码:<input type="password" id="ps"><br>
+    <button>注册</button>
+    <script>
+       var us=document.getElementById("us");
+       var ps=document.getElementById("ps");
+       $('button').click(function(e){
+           var user=us.value;
+           var password=ps.value;
+           $.get(`http://10.9.48.165:1015/reg?us=${user}&ps=${password}`,function(res){
+               if(res.err===0){
+                   alert(res.msg);
+               }else{
+                   alert(res.msg);
+               }
+           })
+       })
+    </script>
+</body>
+</html>
