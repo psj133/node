@@ -1,0 +1,16 @@
+{
+  "name": "一个高大上的api文档",
+  "version": "9999",
+  "description": "这里是描述",
+  "title": "这里是api标题",
+  "url": "http://localhost:3000",
+  "sampleUrl": false,
+  "defaultVersion": "0.0.0",
+  "apidoc": "0.3.0",
+  "generator": {
+    "name": "apidoc",
+    "time": "2018-12-03T04:12:25.168Z",
+    "url": "http://apidocjs.com",
+    "version": "0.17.7"
+  }
+}
