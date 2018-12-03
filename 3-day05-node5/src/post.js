@@ -39,6 +39,6 @@ const upload=require("./router/upload.js");
 app.use('/home',home);
 app.use('/admin',admin);
 app.use('/upload',upload);
-app.listen(3000,'localhost',()=>{
+app.listen(3009,'localhost',()=>{
     console.log('开启服务')
 })
