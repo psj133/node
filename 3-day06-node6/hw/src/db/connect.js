@@ -1,6 +1,6 @@
-let mongoose=require('mongoose');
-mongoose.connect('mongodb://localhost/test',{ useNewUrlParser: true });
-const db=mongoose.connection;
+const mongoose=require('mongoose');
+mongoose.connect('mongodb://localhost/test',{ useNewUrlParser: true } );
+let db=mongoose.connection;
 db.on('error',(err)=>{
     console.log('连接失败');
 })

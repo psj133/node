@@ -1,15 +1,24 @@
 const express=require('express');
+const path=require('path')
 const app=express();
-const path=require('path');
+const cors=require('cors');
+app.use(cors());
 const db=require('./src/db/connect.js')
-const bodyParser=require('body-parser');
-app.use(bodyParser.urlencoded({ extended: false }))
+//post 配置
+var bodyParser = require('body-parser')
 app.use(bodyParser.json())
-//使用路由
-const admin=require("./src/router/admin.js");
-app.use('/admin',admin);
-//配置静态资源目录
+app.use(bodyParser.urlencoded({ extended: false }))
+
+//配置静态目录
 app.use(express.static(path.join(__dirname,'./static')))
-app.listen(1000,()=>{
-    console.log('服务开启');
+// 路由相关
+const admin=require('./src/router/admin.js')
+const home=require('./src/router/home.js')
+const upload=require('./src/router/upload.js')
+app.use('/admin',admin)
+app.use('/home',home)
+app.use('/upload',upload)
+
+app.listen(3000,()=>{
+	console.log('服务器启动')
 })
