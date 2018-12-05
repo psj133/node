@@ -91,8 +91,76 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="lib/webuploader/0.1.5/webuploader.min.js"></script> 
 <script type="text/javascript">
-   let localStorage=window.localStorage;
-   alert(localStorage.getItem('id'));
+  let localstorage=window.localStorage
+   // 添加banner
+   let imgpath=null
+   let OL_Action_Root='http://localhost:3001'
+   function addBanner(){
+     let data={
+			imgPath:imgpath,
+			url:$('#url').val(),
+			name:$('#name').val(),
+      id:localstorage.getItem('id')
+	     }
+   	$.post(OL_Action_Root+'/admin/updateBanner',data,function(res){
+       // 添加ok返回首页
+       if (res.err==0) {
+       	layer_close()
+       }else{
+        alert('修改失败请重试')
+       }
+   	})
+   }
+   // 上传图片
+   function uploadImg(){
+     //获取图片信息
+     let file=$('#file')[0].files[0]
+     //将图片添加到formdata对象
+     let formdata=new FormData();
+     console.log(formdata)
+     formdata.append('test',file)
+     console.log(formdata.get('test'))
+
+     $.ajax({
+         url: OL_Action_Root+'/upload/img',
+         type: 'POST',
+         data: formdata,
+         cache: false,// get方法默认缓存机制  请求url 没有发生变化 数据是从缓存获取而不是服务器。url后方链接一个时间戳
+         contentType: false,//json urlencode formdata
+         processData: false,// 默认的数据解析
+         success: function(data){
+
+               if(data.err==0){
+                  $('#img').attr('src',OL_Action_Root+data.data)
+                  imgpath=data.data
+               }else{
+               	layer.msg('上传失败!',{icon:1,time:1000});
+			
+               }
+         },
+         error: function(jqXHR, textStatus, errorThrown){
+             document.getElementById("status").innerHTML = "<span style='color:#EF0000'>连接不到服务器，请检查网络！</span>";
+         }
+     });
+   }
+   /*
+    1.根据id 获取数据
+    2.根据数据显示界面
+    3.用户修改
+    4.调用修改接口
+    5.成功后返回首页并且刷新界面
+
+   */
+   function init(){
+    $.post(OL_Action_Root+'/admin/getBannerById',{id:localstorage.getItem('id')},function(res){
+        console.log(res)
+        $('#url').val(res.data[0].url)
+        $('#name').val(res.data[0].name)
+        $('#img').attr('src',OL_Action_Root+res.data[0].imgPath)
+        imgpath=res.data[0].imgPath
+    })
+   }
+   init()
 </script>
 </body>
 </html>

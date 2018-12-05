@@ -11,7 +11,16 @@ router.get('/getBanner',(req,res)=>{
 		res.send({err:-1,msg:'查询nook'})
 	})
 })
-
+router.post('/getBannerById',(req,res)=>{
+	let id=req.body.id;
+	Banner.find({_id:id})
+	.then((data)=>{
+		res.send({err:0,msg:'查询ok',data:data})
+	})
+	.catch((err)=>{
+		res.send({err:-1,msg:'查询nook'})
+	})
+})
 router.post('/delBanner',(req,res)=>{
 	let id=req.body.id
 	Banner.remove({_id:id})
@@ -58,5 +67,14 @@ router.post('/updateBanner',(req,res)=>{
     	res.send({err:-1,msg:'修改nook'})
     })
 })
-
+router.post('/pushBanner',(req,res)=>{
+	let {id,push}=req.body
+	Banner.update({_id:id},{push})
+	.then((data)=>{
+    	res.send({err:0,msg:'发布ok'})
+    })
+    .catch((err)=>{
+    	res.send({err:-1,msg:'发布nook'})
+    })
+})
 module.exports=router
